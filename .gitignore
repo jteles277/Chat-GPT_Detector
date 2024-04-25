@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# Archive files
+archive/*txt
+archive/*csv
