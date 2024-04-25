@@ -7,6 +7,7 @@
 
 using namespace std;
 using namespace csv;
+using namespace chrono;
 
 class FiniteContextModelTrainer {
     public:
@@ -32,7 +33,7 @@ class FiniteContextModelTrainer {
             }
         }
 
-        void train(const string& text, const string& label) {
+        void train(string& text, const string& label) {
             if (models.find(label) == models.end()) 
                 models.emplace(label, FiniteContextModel(k, smoothing_factor, alphabet, ignore_case, label));
             
@@ -63,8 +64,7 @@ void printUsage(const char *argv0) {
     cout << "Run the Trainer on the input file." << endl;
     cout << endl;
     cout << "Options:" << endl;
-    cout << "  -n num_labels\t\tNumber of labels for the Trainer. (default: 2)" << endl;
-    cout << "  -o order\t\t\tOrder for the Finite Context Model. (default: 5)" << endl;
+    cout << "  -k order\t\t\tOrder for the Finite Context Model. (default: 5)" << endl;
     cout << "  -s smoothing_factor\t\tSmoothing factor for the Finite Context Model. (default: 1)" << endl;
     cout << "  -a alphabet\t\t\tAlphabet for the Finite Context Model. (default: abc...ABC...012...)" << endl;
     cout << "  -i\t\t\t\tIgnore case when training the model. The alphabet will be converted to uppercase. (default: false)" << endl;
@@ -75,14 +75,13 @@ void printUsage(const char *argv0) {
 
 int main(int argc, char *argv[]) {
     int opt;
-
+    
     bool ignore_case = false;
-
     size_t k = 5;
     float smoothing_factor = 1;
     string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-    while ((opt = getopt(argc, argv, "k:s:a:ih")) != -1) {
+    while ((opt = getopt(argc, argv, "k:s:a:ich")) != -1) {
         switch (opt) {
             case 'k':
                 k = stoi(optarg);
@@ -135,22 +134,24 @@ int main(int argc, char *argv[]) {
 
     FiniteContextModelTrainer trainer(k, smoothing_factor, alphabet, ignore_case);
 
-    auto start_training = chrono::high_resolution_clock::now();
+    auto start_training = high_resolution_clock::now();
 
     for (string input_file: input_files)
         trainer.train(input_file, "text", "label");
 
-    auto end_training = chrono::high_resolution_clock::now();
+    auto end_training = high_resolution_clock::now();
 
-    cout << "Training time: " << chrono::duration_cast<chrono::seconds>(end_training - start_training).count() << " seconds" << endl;
+    cout << "Training time: " << duration_cast<seconds>(end_training - start_training).count() << " seconds" << endl;
 
-    auto start_saving = chrono::high_resolution_clock::now();
+    auto start_saving = high_resolution_clock::now();
     
     trainer.save();
 
-    auto end_saving = chrono::high_resolution_clock::now();
+    auto end_saving = high_resolution_clock::now();
 
-    cout << "Saving time: " << chrono::duration_cast<chrono::seconds>(end_saving - start_saving).count() << " seconds" << endl;
+    cout << "Saving time: " << duration_cast<seconds>(end_saving - start_saving).count() << " seconds" << endl;
+
+    cout << "Total time: " << duration_cast<seconds>(end_saving - start_training).count() << " seconds" << endl;
 
     return 0;
 };

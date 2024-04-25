@@ -12,6 +12,7 @@
 
 using namespace std;
 using namespace csv;
+using namespace chrono;
 
 class FiniteContextModelEvaluator {
     public:
@@ -263,14 +264,14 @@ int main(int argc, char *argv[]) {
 
     FiniteContextModelEvaluator evaluator(model_files);
 
-    auto start = chrono::high_resolution_clock::now();
+    auto start = high_resolution_clock::now();
 
     for (const string& input_file: input_files)
         evaluator.evaluate(input_file, "text", "label");
 
-    auto end = chrono::high_resolution_clock::now();
+    auto end = high_resolution_clock::now();
 
-    cout << "Evaluation time: " << chrono::duration_cast<chrono::seconds>(end - start).count() << " seconds" << endl;
+    cout << "Evaluation time: " << duration_cast<seconds>(end - start).count() << " seconds" << endl;
     cout << endl;
 
     evaluator.summary();

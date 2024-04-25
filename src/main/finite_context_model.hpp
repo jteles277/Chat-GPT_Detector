@@ -15,13 +15,25 @@
 using namespace std;
 
 class FiniteContextModel {
+    
+    struct EventMap {
+        unordered_map<char, uint32_t> events;
+        uint32_t total;
+    };
+
+    private:
+        void increment(EventMap &counts, const char &event) {
+            counts.events[event]++;
+            counts.total++;
+        }
+
     public:
         size_t k;
         float smoothing_factor;
         unordered_set<char> alphabet;
         bool ignore_case;
         string id;
-        unordered_map<string, unordered_map<char, uint32_t>> context_counts;
+        unordered_map<string, EventMap> context_counts;
 
         FiniteContextModel(): k(0), smoothing_factor(0), ignore_case(false) {}
         
@@ -44,57 +56,48 @@ class FiniteContextModel {
 
             while (input.get(c)) {
                 if (is_valid_char(c)) {
-                    context_counts[buffer][c]++;
+                    increment(context_counts[buffer], c);
                     buffer.put(c);
                 }
             }
         }
 
-        void update(const string &input) {
-            char c;
+        void update(string &input) {
             size_t i = 0;
             circular_buffer<char> buffer(k);
 
             while (buffer.size() < k && i < input.size()) {
-                c = input[i];
-                if (is_valid_char(c)) 
-                    buffer.put(c);
+                if (is_valid_char(input[i]))
+                    buffer.put(input[i]);
                 i++;
             }
 
             while (i < input.size()) {
-                c = input[i];
-                if (is_valid_char(c)) {
-                    context_counts[buffer][c]++;
-                    buffer.put(c);
+                if (is_valid_char(input[i])) {
+                    increment(context_counts[buffer], input[i]);
+                    buffer.put(input[i]);
                 }
                 i++;
             }
         }
 
         uint32_t count(const string &context, const char &event) {
-            return context_counts[context][event];
+            return context_counts[context].events[event];
         }
 
         uint32_t count(const string &context) {
-            return accumulate(context_counts[context].begin(), context_counts[context].end(), 0, 
-                [](uint32_t sum, const pair<char, uint32_t>& count) {
-                    return sum + count.second;
-                });
+            return context_counts[context].total;
         }
 
         uint32_t count() {
             return accumulate(context_counts.begin(), context_counts.end(), 0, 
-                [](uint32_t sum, const pair<string, unordered_map<char, uint32_t>>& counts) {
-                    return sum + accumulate(counts.second.begin(), counts.second.end(), 0, 
-                        [](uint32_t sum, const pair<char, uint32_t>& count) {
-                            return sum + count.second;
-                        });
+                [](uint32_t sum, const pair<string, EventMap> &context_count) {
+                    return sum + context_count.second.total;
                 });
         }
 
         float probability(const string &context, const char &event) {
-            return (count(context, event) + smoothing_factor) / (count(context) + smoothing_factor * alphabet.size());
+            return (count(context, event) + smoothing_factor) / (count(context) + alphabet.size() * smoothing_factor);
         }
 
         float estimate_bits(const string &context, const char &event) {
@@ -177,24 +180,25 @@ class FiniteContextModel {
                 size_t context_size;
                 input.read((char*)&context_size, sizeof(context_size));
 
-                string context;
-                context.resize(context_size);
+                string context(context_size, 0);
                 input.read(&context[0], context_size);
 
-                size_t counts_size;
-                input.read((char*)&counts_size, sizeof(counts_size));
+                size_t events_size;
+                input.read((char*)&events_size, sizeof(events_size));
 
-                for (size_t j = 0; j < counts_size; j++) {
+                EventMap counts;
+                for (size_t j = 0; j < events_size; j++) {
                     char event;
-                    input.read(&event, sizeof(event));
-
                     uint32_t count;
+                    input.read(&event, sizeof(event));
                     input.read((char*)&count, sizeof(count));
-
-                    context_counts[context][event] = count;
+                    counts.events[event] = count;
                 }
-            }
 
+                input.read((char*)&counts.total, sizeof(counts.total));
+                context_counts[context] = counts;
+            }
+            
             input.close();
         }
 
@@ -217,18 +221,20 @@ class FiniteContextModel {
             size_t context_counts_size = context_counts.size();
             output.write((char*)&context_counts_size, sizeof(context_counts_size));
 
-            for (auto& [context, counts]: context_counts) {
-                size_t context_size = context.size();
+            for (const auto &context_count : context_counts) {
+                size_t context_size = context_count.first.size();
                 output.write((char*)&context_size, sizeof(context_size));
-                output.write(context.c_str(), context.size());
+                output.write(context_count.first.c_str(), context_count.first.size());
 
-                size_t counts_size = counts.size();
-                output.write((char*)&counts_size, sizeof(counts_size));
+                size_t events_size = context_count.second.events.size();
+                output.write((char*)&events_size, sizeof(events_size));
 
-                for (auto& [event, count]: counts) {
-                    output.write(&event, sizeof(event));
-                    output.write((char*)&count, sizeof(count));
+                for (const auto &event : context_count.second.events) {
+                    output.write(&event.first, sizeof(event.first));
+                    output.write((char*)&event.second, sizeof(event.second));
                 }
+
+                output.write((char*)&context_count.second.total, sizeof(context_count.second.total));
             }
             
             output.close();
