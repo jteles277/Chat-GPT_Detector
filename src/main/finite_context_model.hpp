@@ -104,7 +104,7 @@ class FiniteContextModel {
             return -log2(probability(context, event));
         }
 
-        float estimate_bits(ifstream &input) {
+        float estimate_bits(ifstream &input, const bool &update = false) {
             float bits = 0;
 
             char c;
@@ -118,6 +118,7 @@ class FiniteContextModel {
             while (input.get(c)) {
                 if (is_valid_char(c)) {
                     bits += estimate_bits(buffer, c);
+                    if (update) increment(context_counts[buffer], c);
                     buffer.put(c);
                 }
             }
@@ -125,7 +126,7 @@ class FiniteContextModel {
             return bits;
         }
         
-        float estimate_bits(const string &text) {
+        float estimate_bits(const string &text, const bool &update = false) {
             float bits = 0;
 
             char c;
@@ -143,6 +144,7 @@ class FiniteContextModel {
                 c = text[i];
                 if (is_valid_char(c)) {
                     bits += estimate_bits(buffer, c);
+                    if (update) increment(context_counts[buffer], c);
                     buffer.put(c);
                 }
                 i++;

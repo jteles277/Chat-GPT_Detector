@@ -60,24 +60,15 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    vector<string> input_files;
-
-    for (int i = optind; i < argc; i++)
-        input_files.push_back(argv[i]);
-
+    vector<string> input_files(argv + optind, argv + argc);
     FiniteContextModelEvaluator evaluator(model_files);
 
     auto start = high_resolution_clock::now();
-
     for (const string& input_file: input_files)
         evaluator.evaluate(input_file, "text", "label");
-
     auto end = high_resolution_clock::now();
 
-    cout << "Evaluation time: " << duration_cast<seconds>(end - start).count() << " seconds" << endl;
-    cout << endl;
+    cout << "Evaluation time: " << duration_cast<seconds>(end - start).count() << " seconds" << endl << endl;
 
     evaluator.summary();
-
-    return 0;
 }
