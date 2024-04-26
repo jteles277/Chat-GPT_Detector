@@ -1,6 +1,15 @@
 #ifndef APPROXIMATE_FINITE_CONTEXT_MODEL_HPP_
 #define APPROXIMATE_FINITE_CONTEXT_MODEL_HPP_
 
+#include <iostream>
+#include <fstream>
+#include <unordered_set>
+#include <unordered_map>
+#include <vector>
+#include <string>
+#include <numeric>
+#include <cmath>
+
 #include "finite_context_model.hpp"
 
 using namespace std;
@@ -16,8 +25,14 @@ class ApproximateFiniteContextModel : public FiniteContextModel {
     public:
         uint32_t a;
         uint32_t b;
+        
+        ApproximateFiniteContextModel(): FiniteContextModel(), a(0), b(0) {}
 
         ApproximateFiniteContextModel(const size_t &k, const float &smoothing_factor, const string &alphabet_, const bool &ignore_case, const uint32_t &a, const uint32_t &b, const string &id = ""): FiniteContextModel(k, smoothing_factor, alphabet_, ignore_case, id) {}
+
+        ApproximateFiniteContextModel(const string& input_file) {
+            load(input_file);
+        }
 
         uint32_t count(const string &context, const char &event) {
             if (context_counts[context].events[event] > b)

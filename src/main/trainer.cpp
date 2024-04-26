@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
     }
 
     vector<string> input_files(argv + optind, argv + argc);
-    FiniteContextModelTrainer trainer(k, smoothing_factor, alphabet, ignore_case);
+    ApproximateFiniteContextModelTrainer trainer(k, smoothing_factor, alphabet, ignore_case);
 
     auto start_training = high_resolution_clock::now();
     for (string input_file: input_files)

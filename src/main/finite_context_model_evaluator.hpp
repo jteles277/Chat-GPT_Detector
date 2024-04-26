@@ -9,31 +9,31 @@
 #include <limits>
 #include <numeric>
 
-#include "finite_context_model.hpp"
+#include "approximate_finite_context_model.hpp"
 #include "csv.hpp"
 
 using namespace std;
 using namespace csv;
 
-class FiniteContextModelEvaluator {
+class ApproximateFiniteContextModelEvaluator {
     public:
         double bits = 0;
-        unordered_map<string, FiniteContextModel> models;
+        unordered_map<string, ApproximateFiniteContextModel> models;
         unordered_map<string, unordered_map<string, uint32_t>> confusion_matrix;
 
-        FiniteContextModelEvaluator(const vector<string>& model_files) {
+        ApproximateFiniteContextModelEvaluator(const vector<string>& model_files) {
             for (const string& model_file: model_files) {
-                FiniteContextModel model(model_file);
+                ApproximateFiniteContextModel model(model_file);
                 models.emplace(model.id, model);
             }
         }
 
-        FiniteContextModelEvaluator(const unordered_map<string, string>& model_files) {
+        ApproximateFiniteContextModelEvaluator(const unordered_map<string, string>& model_files) {
             for (const auto& [label, model_file]: model_files)
-                models.emplace(label, FiniteContextModel(model_file));
+                models.emplace(label, ApproximateFiniteContextModel(model_file));
         }
 
-        FiniteContextModelEvaluator(const unordered_map<string, FiniteContextModel>& models): models(models) {}
+        ApproximateFiniteContextModelEvaluator(const unordered_map<string, ApproximateFiniteContextModel>& models): models(models) {}
 
         void evaluate(const string& text, const string& label) {
             string predicted_label = predict(text);

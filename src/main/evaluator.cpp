@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
     }
 
     vector<string> input_files(argv + optind, argv + argc);
-    FiniteContextModelEvaluator evaluator(model_files);
+    ApproximateFiniteContextModelEvaluator evaluator(model_files);
 
     auto start = high_resolution_clock::now();
     for (const string& input_file: input_files)
