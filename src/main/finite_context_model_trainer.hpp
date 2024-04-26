@@ -7,21 +7,21 @@
 #include <string>
 #include <numeric>
 
-#include "approximate_finite_context_model.hpp"
+#include "finite_context_model.hpp"
 #include "csv.hpp"
 
 using namespace std;
 using namespace csv;
 
-class ApproximateFiniteContextModelTrainer {
+class FiniteContextModelTrainer {
     public:
         size_t k;
         float smoothing_factor;
         string alphabet;
         bool ignore_case;
-        unordered_map<string, ApproximateFiniteContextModel> models;
+        unordered_map<string, FiniteContextModel> models;
 
-        ApproximateFiniteContextModelTrainer(const size_t &k, const float &smoothing_factor, const string &alphabet, const bool &ignore_case): k(k), smoothing_factor(smoothing_factor), alphabet(alphabet), ignore_case(ignore_case) {}
+        FiniteContextModelTrainer(const size_t &k, const float &smoothing_factor, const string &alphabet, const bool &ignore_case): k(k), smoothing_factor(smoothing_factor), alphabet(alphabet), ignore_case(ignore_case) {}
 
         void train(const string& input_file, const string& text_column, const string& label_column) {
             CSVReader reader(input_file);
@@ -31,7 +31,7 @@ class ApproximateFiniteContextModelTrainer {
                 string label = row[label_column].get<>();
 
                 if (models.find(label) == models.end()) 
-                    models.emplace(label, ApproximateFiniteContextModel(k, smoothing_factor, alphabet, ignore_case, 12, 8, label));
+                    models.emplace(label, FiniteContextModel(k, smoothing_factor, alphabet, ignore_case, label));
 
                 models[label].update(text);
             }
@@ -39,14 +39,14 @@ class ApproximateFiniteContextModelTrainer {
 
         void train(string& text, const string& label) {
             if (models.find(label) == models.end()) 
-                models.emplace(label, ApproximateFiniteContextModel(k, smoothing_factor, alphabet, ignore_case, 12, 8, label));
+                models.emplace(label, FiniteContextModel(k, smoothing_factor, alphabet, ignore_case, label));
             
             models[label].update(text);
         }
 
         void train(ifstream& input, const string& label) {
             if (models.find(label) == models.end()) 
-                models.emplace(label, ApproximateFiniteContextModel(k, smoothing_factor, alphabet, ignore_case, 12, 8, label));
+                models.emplace(label, FiniteContextModel(k, smoothing_factor, alphabet, ignore_case, label));
 
             models[label].update(input);
         }
