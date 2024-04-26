@@ -1,5 +1,5 @@
-#ifndef FINITE_CONTEXT_MODEL_HPP
-#define FINITE_CONTEXT_MODEL_HPP
+#ifndef FINITE_CONTEXT_MODEL_HPP_
+#define FINITE_CONTEXT_MODEL_HPP_
 
 #include <iostream>
 #include <fstream>
@@ -251,4 +251,4 @@ class FiniteContextModel {
         }
 };
 
-#endif // FINITE_CONTEXT_MODEL_HPP
+#endif // FINITE_CONTEXT_MODEL_HPP_
