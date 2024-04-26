@@ -14,15 +14,15 @@
 
 using namespace std;
 
+struct EventMap {
+    unordered_map<char, uint32_t> events;
+    uint32_t total;
+};
+
 class FiniteContextModel {
-    
-    struct EventMap {
-        unordered_map<char, uint32_t> events;
-        uint32_t total;
-    };
 
     private:
-        void increment(EventMap &counts, const char &event) {
+        virtual void increment(EventMap &counts, const char &event) {
             counts.events[event]++;
             counts.total++;
         }
@@ -81,11 +81,11 @@ class FiniteContextModel {
             }
         }
 
-        uint32_t count(const string &context, const char &event) {
+        virtual uint32_t count(const string &context, const char &event) {
             return context_counts[context].events[event];
         }
 
-        uint32_t count(const string &context) {
+        virtual uint32_t count(const string &context) {
             return context_counts[context].total;
         }
 
@@ -153,7 +153,7 @@ class FiniteContextModel {
             return bits;
         }
 
-        void load(const string& input_file) {
+        virtual void load(const string& input_file) {
             ifstream input(input_file, ios::binary);
 
             size_t id_size;
@@ -205,7 +205,7 @@ class FiniteContextModel {
             input.close();
         }
 
-        void save(const string &output_file) {
+        virtual void save(const string &output_file) {
             ofstream output(output_file, ios::binary);
 
             size_t id_size = id.size();
