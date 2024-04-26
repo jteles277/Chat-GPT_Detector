@@ -182,7 +182,8 @@ class FiniteContextModel {
                 size_t context_size;
                 input.read((char*)&context_size, sizeof(context_size));
 
-                string context(context_size, 0);
+                string context;
+                context.resize(context_size);
                 input.read(&context[0], context_size);
 
                 size_t events_size;
