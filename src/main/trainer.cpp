@@ -8,7 +8,7 @@
 using namespace std;
 using namespace chrono;
 
-void printUsage(const char *argv0) {
+void print_usage(const char *argv0) {
     cout << "Usage: " << argv0 << " [-n num_labels] [-k order] [-s smoothing_factor] [-a alphabet] input_file+" << endl;
     cout << endl;
     cout << "Run the Trainer on the input file." << endl;
@@ -55,19 +55,19 @@ int main(int argc, char *argv[]) {
                 break;
             case 'h':
                 printf("Help\n");
-                printUsage(argv[0]);
+                print_usage(argv[0]);
                 exit(EXIT_SUCCESS);
             case '?':
                 printf("Unknown option: %c\n", optopt);
-                printUsage(argv[0]);
+                print_usage(argv[0]);
                 exit(EXIT_FAILURE);
             case ':':
                 printf("Missing argument for option: %c\n", optopt);
-                printUsage(argv[0]);
+                print_usage(argv[0]);
                 exit(EXIT_FAILURE);
             default:
                 printf("Error parsing arguments\n");
-                printUsage(argv[0]);
+                print_usage(argv[0]);
                 exit(EXIT_FAILURE);
         }
     }
