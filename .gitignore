@@ -34,3 +34,6 @@
 # Archive files
 archive/*txt
 archive/*csv
+
+# Link file
+!archive/link.txt
