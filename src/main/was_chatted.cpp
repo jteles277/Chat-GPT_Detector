@@ -12,7 +12,7 @@ using namespace chrono;
 void print_usage(const char *argv0) {
     cout << "Usage: " << argv0 << " [-m model_file+] input_file+" << endl;
     cout << endl;
-    cout << "Run the Evaluator on the input file." << endl;
+    cout << "Run the was_chatted program on the input file(s) using the model file(s)." << endl;
     cout << endl;
     cout << "Options:" << endl;
     cout << "  -m model_file+\t\tModel file(s) for the Evaluator." << endl;
@@ -71,17 +71,22 @@ int main(int argc, char *argv[]) {
 
     cout << "Loading time: " << fixed << setprecision(6) << duration_cast<duration<double>>(end_loading - start_loading).count() << "s" << endl << endl;
 
-    auto start_evaluating = high_resolution_clock::now();
+    auto start_predicting = high_resolution_clock::now();
 
+    cout << "Prediction results:" << endl;
     for (const string& input_file: input_files)
-        evaluator.evaluate(input_file, "text", "label");
+    {
+        ifstream input(input_file);
+        string label = evaluator.predict(input);
+        
+        cout << input_file << ": " << label << endl;
+    }
 
-    auto end_evaluating = high_resolution_clock::now();
+    auto end_predicting = high_resolution_clock::now();
 
-    evaluator.summary();
-
+    
     cout << endl;
-    cout << "Evaluation time: " << fixed << setprecision(6) << duration_cast<duration<double>>(end_evaluating - start_evaluating).count() << "s" << endl;
-    cout << "Average evaluation time: " << fixed << setprecision(6) << duration_cast<duration<double>>(end_evaluating - start_evaluating).count() / input_files.size() << "s" << endl;
-    cout << "Total time: " << fixed << setprecision(6) << duration_cast<duration<double>>(end_evaluating - start_loading).count() << "s" << endl;
+    cout << "Prediction time: " << fixed << setprecision(6) << duration_cast<duration<double>>(end_predicting - start_predicting).count() << "s" << endl;
+    cout << "Average prediction time: " << fixed << setprecision(6) << duration_cast<duration<double>>(end_predicting - start_predicting).count() / input_files.size() << "s" << endl;
+    cout << "Total time: " << fixed << setprecision(6) << duration_cast<duration<double>>(end_predicting - start_loading).count() << "s" << endl;
 }

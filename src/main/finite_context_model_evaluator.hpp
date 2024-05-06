@@ -57,11 +57,17 @@ class FiniteContextModelEvaluator {
             string predicted_label;
 
             for (auto& [label, model]: models) {
+
                 float bits = model.estimate_bits(input_file);
+
+                input_file.clear();
+                input_file.seekg(0, ios::beg);
+
                 if (bits < min_bits) {
                     min_bits = bits;
                     predicted_label = label;
                 }
+                
             }
 
             bits += min_bits;

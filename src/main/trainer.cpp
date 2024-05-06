@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <iomanip>
 #include <chrono>
 
 #include "finite_context_model_trainer.hpp"
@@ -82,13 +83,19 @@ int main(int argc, char *argv[]) {
     FiniteContextModelTrainer trainer(k, smoothing_factor, alphabet, ignore_case);
 
     auto start_training = high_resolution_clock::now();
+
     for (string input_file: input_files)
         trainer.train(input_file, "text", "label");
+
     auto end_training = high_resolution_clock::now();
-    cout << "Training time: " << duration_cast<seconds>(end_training - start_training).count() << " seconds" << endl;
+
+    cout << "Training time: " << fixed << setprecision(6) << duration_cast<duration<double>>(end_training - start_training).count() << "s" << endl;
 
     auto start_saving = high_resolution_clock::now();
+
     trainer.save();
+
     auto end_saving = high_resolution_clock::now();
-    cout << "Saving time: " << duration_cast<seconds>(end_saving - start_saving).count() << " seconds" << endl;
+    
+    cout << "Saving time: " << fixed << setprecision(6) << duration_cast<duration<double>>(end_saving - start_saving).count() << "s" << endl;
 };
