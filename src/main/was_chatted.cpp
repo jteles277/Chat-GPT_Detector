@@ -15,7 +15,7 @@ void print_usage(const char *argv0) {
     cout << "Run the was_chatted program on the input file(s) using the model file(s)." << endl;
     cout << endl;
     cout << "Options:" << endl;
-    cout << "  -m model_file+\t\tModel file(s) for the Evaluator." << endl;
+    cout << "  -m model_file+\t\tModel file(s) to use for prediction" << endl;
     cout << "  -h\t\t\t\tDisplay this help message" << endl;
     cout << endl;
 }
@@ -83,7 +83,6 @@ int main(int argc, char *argv[]) {
     }
 
     auto end_predicting = high_resolution_clock::now();
-
     
     cout << endl;
     cout << "Prediction time: " << fixed << setprecision(6) << duration_cast<duration<double>>(end_predicting - start_predicting).count() << "s" << endl;
