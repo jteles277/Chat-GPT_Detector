@@ -73,13 +73,24 @@ int main(int argc, char *argv[]) {
 
     auto start_predicting = high_resolution_clock::now();
 
-    cout << "Prediction results:" << endl;
+    vector<Prediction> predictions;
+
     for (const string& input_file: input_files)
     {
         ifstream input(input_file);
-        string label = evaluator.predict(input);
-        
-        cout << input_file << ": " << label << endl;
+        predictions.push_back(evaluator.predict(input));
+    }
+
+    for (size_t i = 0; i < input_files.size(); i++)
+    {
+        cout << "Input file: " << input_files[i] << endl;
+        cout << "Predicted label: " << predictions[i].label << endl;
+        cout << "Predicted bits:" << endl;
+
+        for (const auto& [label, bits]: predictions[i].bits)
+            cout << "  " << label << ": " << fixed << setprecision(6) << bits << " bits" << endl;
+
+        cout << endl;
     }
 
     auto end_predicting = high_resolution_clock::now();

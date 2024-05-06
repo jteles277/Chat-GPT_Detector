@@ -15,6 +15,11 @@
 using namespace std;
 using namespace csv;
 
+struct Prediction {
+    string label;
+    unordered_map<string, double> bits;
+};
+
 class FiniteContextModelEvaluator {
     public:
         double bits = 0;
@@ -36,7 +41,7 @@ class FiniteContextModelEvaluator {
         FiniteContextModelEvaluator(const unordered_map<string, FiniteContextModel>& models): models(models) {}
 
         void evaluate(const string& text, const string& label) {
-            string predicted_label = predict(text);
+            string predicted_label = predict(text).label;
             confusion_matrix[label][predicted_label]++;
         }
 
@@ -47,18 +52,20 @@ class FiniteContextModelEvaluator {
                 string text = row[text_column].get<>();
                 string label = row[label_column].get<>();
 
-                string predicted_label = predict(text);
+                string predicted_label = predict(text).label;
                 confusion_matrix[label][predicted_label]++;
             }
         }
 
-        string predict(ifstream& input_file) {
+        Prediction predict(ifstream& input_file) {
             float min_bits = numeric_limits<float>::max();
+
             string predicted_label;
+            unordered_map<string, double> predicted_bits;
 
             for (auto& [label, model]: models) {
-
                 float bits = model.estimate_bits(input_file);
+                predicted_bits[label] = bits;
 
                 input_file.clear();
                 input_file.seekg(0, ios::beg);
@@ -72,15 +79,19 @@ class FiniteContextModelEvaluator {
 
             bits += min_bits;
 
-            return predicted_label;
+            return {predicted_label, predicted_bits};
         }
 
-        string predict(const string& text) {
+        Prediction predict(const string& text) {
             float min_bits = numeric_limits<float>::max();
+
             string predicted_label;
+            unordered_map<string, double> predicted_bits;
 
             for (auto& [label, model]: models) {
-                float bits = model.estimate_bits(text);
+                double bits = model.estimate_bits(text);
+                predicted_bits[label] = bits;
+
                 if (bits < min_bits) {
                     min_bits = bits;
                     predicted_label = label;
@@ -89,7 +100,7 @@ class FiniteContextModelEvaluator {
 
             bits += min_bits;
 
-            return predicted_label;
+            return {predicted_label, predicted_bits};
         }
 
         uint32_t count(const string& label, const string& predicted_label) {
