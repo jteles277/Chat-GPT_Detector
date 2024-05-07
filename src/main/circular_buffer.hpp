@@ -16,7 +16,6 @@
 #ifndef CIRCULAR_BUFFER_HPP_
 #define CIRCULAR_BUFFER_HPP_
 
-#include <vector>
 #include <mutex>
 #include <optional>
 
@@ -26,7 +25,12 @@ template<class T>
 class circular_buffer
 {
   	public:
-		explicit circular_buffer(size_t capacity) : capacity_(capacity), buf_(capacity) {}
+		explicit circular_buffer(size_t capacity) : capacity_(capacity), buf_(new T[capacity]), head_(0), tail_(0), full_(false) {}
+	
+		~circular_buffer()
+		{
+			delete[] buf_;
+		}
 	
 		void put(T item) noexcept
 		{
@@ -143,10 +147,10 @@ class circular_buffer
   	private:
 		mutable recursive_mutex mutex_;
 		size_t capacity_;
-		mutable vector<T> buf_;
-		mutable size_t head_ = 0;
-		mutable size_t tail_ = 0;
-		mutable bool full_ = false;
+		mutable T* buf_;
+		mutable size_t head_;
+		mutable size_t tail_;
+		mutable bool full_;
 };
 
 #endif // CIRCULAR_BUFFER_HPP_
