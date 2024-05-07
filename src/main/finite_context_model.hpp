@@ -38,7 +38,8 @@ class FiniteContextModel {
         FiniteContextModel(): k(0), smoothing_factor(0), ignore_case(false) {}
         
         FiniteContextModel(const size_t &k, const float &smoothing_factor, const string &alphabet_, const bool &ignore_case, const string &id = ""): k(k), smoothing_factor(smoothing_factor), ignore_case(ignore_case), id(id) {
-            for (char c : alphabet_) alphabet.insert(c);
+            for (char c : alphabet_)
+                alphabet.insert(ignore_case ? toupper(c) : c);
         }
 
         FiniteContextModel(const string& input_file) {
