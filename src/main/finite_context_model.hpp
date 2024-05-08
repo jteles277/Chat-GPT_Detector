@@ -23,6 +23,15 @@ class FiniteContextModel {
 
     private:
         virtual void increment(EventMap &counts, const char &event) {
+            if (counts.total == UINT32_MAX) {
+                cerr << "Warning: Event count has reached maximum size (UINT32_MAX). Scaling down counts." << endl;
+
+                for (auto &pair : counts.events)
+                    pair.second /= scaling_factor;
+
+                counts.total /= scaling_factor;
+            }
+
             counts.events[event]++;
             counts.total++;
         }
@@ -32,13 +41,15 @@ class FiniteContextModel {
         float smoothing_factor;
         unordered_set<char> alphabet;
         bool ignore_case;
+        uint8_t scaling_factor;
         string id;
         unordered_map<string, EventMap> context_counts;
 
         FiniteContextModel(): k(0), smoothing_factor(0), ignore_case(false) {}
         
-        FiniteContextModel(const size_t &k, const float &smoothing_factor, const string &alphabet_, const bool &ignore_case, const string &id = ""): k(k), smoothing_factor(smoothing_factor), ignore_case(ignore_case), id(id) {
-            for (char c : alphabet_) alphabet.insert(c);
+        FiniteContextModel(const size_t &k, const float &smoothing_factor, const string &alphabet_, const bool &ignore_case, const uint8_t scaling_factor, const string &id = ""): k(k), smoothing_factor(smoothing_factor), ignore_case(ignore_case), scaling_factor(scaling_factor), id(id) {
+            for (char c : alphabet_)
+                alphabet.insert(ignore_case ? toupper(c) : c);
         }
 
         FiniteContextModel(const string& input_file) {
@@ -165,6 +176,7 @@ class FiniteContextModel {
             input.read((char*)&k, sizeof(k));
             input.read((char*)&smoothing_factor, sizeof(smoothing_factor));
             input.read((char*)&ignore_case, sizeof(ignore_case));
+            input.read((char*)&scaling_factor, sizeof(scaling_factor));
 
             size_t alphabet_size;
             input.read((char*)&alphabet_size, sizeof(alphabet_size));
@@ -215,6 +227,7 @@ class FiniteContextModel {
             output.write((char*)&k, sizeof(k));
             output.write((char*)&smoothing_factor, sizeof(smoothing_factor));
             output.write((char*)&ignore_case, sizeof(ignore_case));
+            output.write((char*)&scaling_factor, sizeof(scaling_factor));
 
             size_t alphabet_size = alphabet.size();
             output.write((char*)&alphabet_size, sizeof(alphabet_size));

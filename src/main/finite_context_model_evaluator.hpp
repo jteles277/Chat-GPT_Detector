@@ -40,31 +40,31 @@ class FiniteContextModelEvaluator {
 
         FiniteContextModelEvaluator(const unordered_map<string, FiniteContextModel>& models): models(models) {}
 
-        void evaluate(const string& text, const string& label) {
-            string predicted_label = predict(text).label;
+        void evaluate(const string& text, const string& label, const bool& update = false) {
+            string predicted_label = predict(text, update).label;
             confusion_matrix[label][predicted_label]++;
         }
 
-        void evaluate(const string& input_file, const string& text_column, const string& label_column) {
+        void evaluate(const string& input_file, const string& text_column, const string& label_column, const bool& update = false) {
             CSVReader reader(input_file);
 
             for (CSVRow& row: reader) {
                 string text = row[text_column].get<>();
                 string label = row[label_column].get<>();
 
-                string predicted_label = predict(text).label;
+                string predicted_label = predict(text, update).label;
                 confusion_matrix[label][predicted_label]++;
             }
         }
 
-        Prediction predict(ifstream& input_file) {
+        Prediction predict(ifstream& input_file, const bool& update = false) {
             float min_bits = numeric_limits<float>::max();
 
             string predicted_label;
             unordered_map<string, double> predicted_bits;
 
             for (auto& [label, model]: models) {
-                float bits = model.estimate_bits(input_file);
+                float bits = model.estimate_bits(input_file, update);
                 predicted_bits[label] = bits;
 
                 input_file.clear();
@@ -82,14 +82,14 @@ class FiniteContextModelEvaluator {
             return {predicted_label, predicted_bits};
         }
 
-        Prediction predict(const string& text) {
+        Prediction predict(const string& text, const bool& update = false) {
             float min_bits = numeric_limits<float>::max();
 
             string predicted_label;
             unordered_map<string, double> predicted_bits;
 
             for (auto& [label, model]: models) {
-                double bits = model.estimate_bits(text);
+                double bits = model.estimate_bits(text, update);
                 predicted_bits[label] = bits;
 
                 if (bits < min_bits) {

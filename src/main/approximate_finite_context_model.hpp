@@ -18,6 +18,14 @@ class ApproximateFiniteContextModel : public FiniteContextModel {
     private:
         void increment(EventMap &counts, const char &event) {
             if (counts.events[event] < b || (static_cast<double>(rand()) / RAND_MAX) < (1.0 / pow(1.0 + 1.0 / a, counts.events[event]))) {
+                if (counts.total == UINT32_MAX) {
+                    cerr << "Warning: Event count has reached maximum size (UINT32_MAX). Scaling down counts." << endl;
+
+                    for (auto &pair : counts.events)
+                        pair.second /= scaling_factor;
+                        
+                    counts.total /= scaling_factor;
+                }
                 counts.events[event]++;
                 counts.total++;
             }
@@ -28,7 +36,7 @@ class ApproximateFiniteContextModel : public FiniteContextModel {
         
         ApproximateFiniteContextModel(): FiniteContextModel(), a(0), b(0) {}
 
-        ApproximateFiniteContextModel(const size_t &k, const float &smoothing_factor, const string &alphabet_, const bool &ignore_case, const uint32_t &a, const uint32_t &b, const string &id = ""): FiniteContextModel(k, smoothing_factor, alphabet_, ignore_case, id) {}
+        ApproximateFiniteContextModel(const size_t &k, const float &smoothing_factor, const string &alphabet_, const bool &ignore_case, const uint8_t &scaling_factor, const uint32_t &a, const uint32_t &b, const string &id = ""): FiniteContextModel(k, smoothing_factor, alphabet_, ignore_case, scaling_factor, id), a(a), b(b) {}
 
         ApproximateFiniteContextModel(const string& input_file) {
             load(input_file);
@@ -58,6 +66,7 @@ class ApproximateFiniteContextModel : public FiniteContextModel {
             input.read((char*)&k, sizeof(k));
             input.read((char*)&smoothing_factor, sizeof(smoothing_factor));
             input.read((char*)&ignore_case, sizeof(ignore_case));
+            input.read((char*)&scaling_factor, sizeof(scaling_factor));
             input.read((char*)&a, sizeof(a));
             input.read((char*)&b, sizeof(b));
 
@@ -110,6 +119,7 @@ class ApproximateFiniteContextModel : public FiniteContextModel {
             output.write((char*)&k, sizeof(k));
             output.write((char*)&smoothing_factor, sizeof(smoothing_factor));
             output.write((char*)&ignore_case, sizeof(ignore_case));
+            output.write((char*)&scaling_factor, sizeof(scaling_factor));
             output.write((char*)&a, sizeof(a));
             output.write((char*)&b, sizeof(b));
 

@@ -16,6 +16,7 @@ void print_usage(const char *argv0) {
     cout << endl;
     cout << "Options:" << endl;
     cout << "  -m model_file+\t\tModel file(s) for the Evaluator." << endl;
+    cout << "  -u\t\t\t\tUpdate the counts of the model while evaluating." << endl;
     cout << "  -h\t\t\t\tDisplay this help message" << endl;
     cout << endl;
 }
@@ -24,11 +25,15 @@ int main(int argc, char *argv[]) {
     int opt;
 
     vector<string> model_files;
+    bool update = false;
 
-    while ((opt = getopt(argc, argv, "m:h")) != -1) {
+    while ((opt = getopt(argc, argv, "m:uh")) != -1) {
         switch (opt) {
             case 'm':
                 model_files.push_back(optarg);
+                break;
+            case 'u':
+                update = true;
                 break;
             case 'h':
                 printf("Help\n");
@@ -74,7 +79,7 @@ int main(int argc, char *argv[]) {
     auto start_evaluating = high_resolution_clock::now();
 
     for (const string& input_file: input_files)
-        evaluator.evaluate(input_file, "text", "label");
+        evaluator.evaluate(input_file, "text", "label", update);
 
     auto end_evaluating = high_resolution_clock::now();
 
