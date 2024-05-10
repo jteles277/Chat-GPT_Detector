@@ -1,0 +1,553 @@
+k = 3, s = 0.5, Training time: 105.524623281 seconds
+Loading time: 0.425073s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55451	394
+1	1891	28851
+
+Total: 86587
+Accuracy: 0.973610
+Total bits: 380454859.779572
+Average bits: 4393.902832
+
+Evaluation time: 73.013811s
+Average evaluation time: 73.013811s
+Total time: 73.438955s
+
+k = 3, s = 0.75, Training time: 108.467121723 seconds
+Loading time: 0.445101s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55454	391
+1	1914	28828
+
+Total: 86587
+Accuracy: 0.973379
+Total bits: 380691147.895325
+Average bits: 4396.631836
+
+Evaluation time: 76.929913s
+Average evaluation time: 76.929913s
+Total time: 77.375080s
+
+k = 3, s = 1, Training time: 108.880248180 seconds
+Loading time: 0.422849s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55451	394
+1	1929	28813
+
+Total: 86587
+Accuracy: 0.973171
+Total bits: 380919362.816772
+Average bits: 4399.267578
+
+Evaluation time: 76.091949s
+Average evaluation time: 76.091949s
+Total time: 76.514869s
+
+k = 3, s = 1.25, Training time: 109.309878214 seconds
+Loading time: 0.432375s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55454	391
+1	1940	28802
+
+Total: 86587
+Accuracy: 0.973079
+Total bits: 381137159.028015
+Average bits: 4401.782715
+
+Evaluation time: 76.861114s
+Average evaluation time: 76.861114s
+Total time: 77.293553s
+
+k = 3, s = 1.5, Training time: 103.194827384 seconds
+Loading time: 0.442586s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55456	389
+1	1948	28794
+
+Total: 86587
+Accuracy: 0.973010
+Total bits: 381345030.978180
+Average bits: 4404.183594
+
+Evaluation time: 66.465990s
+Average evaluation time: 66.465990s
+Total time: 66.908642s
+
+k = 4, s = 0.5, Training time: 205.917174454 seconds
+Loading time: 2.442549s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55623	222
+1	882	29860
+
+Total: 86587
+Accuracy: 0.987250
+Total bits: 312559436.789673
+Average bits: 3609.773193
+
+Evaluation time: 140.637579s
+Average evaluation time: 140.637579s
+Total time: 143.080198s
+
+k = 4, s = 0.75, Training time: 215.251457487 seconds
+Loading time: 2.433838s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55634	211
+1	900	29842
+
+Total: 86587
+Accuracy: 0.987169
+Total bits: 313690755.967865
+Average bits: 3622.838867
+
+Evaluation time: 139.817666s
+Average evaluation time: 139.817666s
+Total time: 142.251568s
+
+k = 4, s = 1, Training time: 201.567931425 seconds
+Loading time: 2.300339s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55633	212
+1	906	29836
+
+Total: 86587
+Accuracy: 0.987088
+Total bits: 314707583.242523
+Average bits: 3634.582275
+
+Evaluation time: 125.868365s
+Average evaluation time: 125.868365s
+Total time: 128.168770s
+
+k = 4, s = 1.25, Training time: 195.761487842 seconds
+Loading time: 2.285896s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55636	209
+1	920	29822
+
+Total: 86587
+Accuracy: 0.986961
+Total bits: 315637601.314240
+Average bits: 3645.323242
+
+Evaluation time: 119.232425s
+Average evaluation time: 119.232425s
+Total time: 121.518463s
+
+k = 4, s = 1.5, Training time: 191.186652471 seconds
+Loading time: 2.302787s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55640	205
+1	931	29811
+
+Total: 86587
+Accuracy: 0.986880
+Total bits: 316500010.784790
+Average bits: 3655.283203
+
+Evaluation time: 120.736681s
+Average evaluation time: 120.736681s
+Total time: 123.039544s
+
+k = 5, s = 0.5, Training time: 255.674438626 seconds
+Loading time: 6.962146s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55687	158
+1	506	30236
+
+Total: 86587
+Accuracy: 0.992331
+Total bits: 282145598.146973
+Average bits: 3258.521484
+
+Evaluation time: 157.511535s
+Average evaluation time: 157.511535s
+Total time: 164.473760s
+
+k = 5, s = 0.75, Training time: 259.420639965 seconds
+Loading time: 7.052702s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55703	142
+1	539	30203
+
+Total: 86587
+Accuracy: 0.992135
+Total bits: 285242704.617615
+Average bits: 3294.290283
+
+Evaluation time: 155.736581s
+Average evaluation time: 155.736581s
+Total time: 162.789354s
+
+k = 5, s = 1, Training time: 256.119980708 seconds
+Loading time: 6.867457s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55714	131
+1	579	30163
+
+Total: 86587
+Accuracy: 0.991800
+Total bits: 287941502.083740
+Average bits: 3325.458740
+
+Evaluation time: 155.136063s
+Average evaluation time: 155.136063s
+Total time: 162.003606s
+
+k = 5, s = 1.25, Training time: 253.339355783 seconds
+Loading time: 6.718220s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55721	124
+1	592	30150
+
+Total: 86587
+Accuracy: 0.991731
+Total bits: 290358934.879456
+Average bits: 3353.377930
+
+Evaluation time: 157.924635s
+Average evaluation time: 157.924635s
+Total time: 164.642919s
+
+k = 5, s = 1.5, Training time: 285.505833784 seconds
+Loading time: 7.200783s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55733	112
+1	602	30140
+
+Total: 86587
+Accuracy: 0.991754
+Total bits: 292565270.958496
+Average bits: 3378.859131
+
+Evaluation time: 172.502471s
+Average evaluation time: 172.502471s
+Total time: 179.703324s
+
+k = 6, s = 0.5, Training time: 331.862400532 seconds
+Loading time: 16.317184s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55646	199
+1	302	30440
+
+Total: 86587
+Accuracy: 0.994214
+Total bits: 278822262.694092
+Average bits: 3220.139893
+
+Evaluation time: 200.223463s
+Average evaluation time: 200.223463s
+Total time: 216.551513s
+
+k = 6, s = 0.75, Training time: 332.557095003 seconds
+Loading time: 15.937029s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55683	162
+1	348	30394
+
+Total: 86587
+Accuracy: 0.994110
+Total bits: 285013483.454224
+Average bits: 3291.642822
+
+Evaluation time: 201.287916s
+Average evaluation time: 201.287916s
+Total time: 217.225027s
+
+k = 6, s = 1, Training time: 341.449020409 seconds
+Loading time: 15.498199s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55713	132
+1	372	30370
+
+Total: 86587
+Accuracy: 0.994179
+Total bits: 290245863.292938
+Average bits: 3352.072021
+
+Evaluation time: 198.056357s
+Average evaluation time: 198.056357s
+Total time: 213.554677s
+
+k = 6, s = 1.25, Training time: 332.799590512 seconds
+Loading time: 14.361245s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55733	112
+1	398	30344
+
+Total: 86587
+Accuracy: 0.994110
+Total bits: 294830069.107880
+Average bits: 3405.015381
+
+Evaluation time: 184.784336s
+Average evaluation time: 184.784336s
+Total time: 199.145677s
+
+k = 6, s = 1.5, Training time: 303.951213104 seconds
+Loading time: 14.433383s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55738	107
+1	424	30318
+
+Total: 86587
+Accuracy: 0.993867
+Total bits: 298940452.363098
+Average bits: 3452.486572
+
+Evaluation time: 183.872531s
+Average evaluation time: 183.872531s
+Total time: 198.306095s
+
+k = 7, s = 0.5, Training time: 342.598172614 seconds
+Loading time: 30.385967s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55560	285
+1	205	30537
+
+Total: 86587
+Accuracy: 0.994341
+Total bits: 293315235.085602
+Average bits: 3387.520508
+
+Evaluation time: 206.593928s
+Average evaluation time: 206.593928s
+Total time: 236.990700s
+
+k = 7, s = 0.75, Training time: 338.095816020 seconds
+Loading time: 26.767112s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55599	246
+1	246	30496
+
+Total: 86587
+Accuracy: 0.994318
+Total bits: 303254565.593719
+Average bits: 3502.310547
+
+Evaluation time: 190.664475s
+Average evaluation time: 190.664475s
+Total time: 217.442381s
+
+k = 7, s = 1, Training time: 335.641678779 seconds
+Loading time: 27.724314s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55627	218
+1	288	30454
+
+Total: 86587
+Accuracy: 0.994156
+Total bits: 311417218.429169
+Average bits: 3596.581787
+
+Evaluation time: 193.837309s
+Average evaluation time: 193.837309s
+Total time: 221.561745s
+
+k = 7, s = 1.25, Training time: 339.875223444 seconds
+Loading time: 27.716860s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55642	203
+1	304	30438
+
+Total: 86587
+Accuracy: 0.994145
+Total bits: 318420982.035583
+Average bits: 3677.468750
+
+Evaluation time: 195.421228s
+Average evaluation time: 195.421228s
+Total time: 223.149007s
+
+k = 7, s = 1.5, Training time: 341.725053984 seconds
+Loading time: 27.609959s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55651	194
+1	321	30421
+
+Total: 86587
+Accuracy: 0.994052
+Total bits: 324597214.207581
+Average bits: 3748.798584
+
+Evaluation time: 194.209595s
+Average evaluation time: 194.209595s
+Total time: 221.830575s
+
+k = 8, s = 0.5, Training time: 363.677827432 seconds
+Loading time: 58.430196s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55423	422
+1	132	30610
+
+Total: 86587
+Accuracy: 0.993602
+Total bits: 318851205.851349
+Average bits: 3682.437500
+
+Evaluation time: 422.456771s
+Average evaluation time: 422.456771s
+Total time: 480.890580s
+
+k = 8, s = 0.75, Training time: 388.194621947 seconds
+Loading time: 63.591919s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55526	319
+1	179	30563
+
+Total: 86587
+Accuracy: 0.994249
+Total bits: 332634802.628937
+Average bits: 3841.625244
+
+Evaluation time: 457.642753s
+Average evaluation time: 457.642753s
+Total time: 521.238184s
+
+k = 8, s = 1, Training time: 399.370742777 seconds
+Loading time: 56.261139s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55565	280
+1	210	30532
+
+Total: 86587
+Accuracy: 0.994341
+Total bits: 343665805.892517
+Average bits: 3969.023193
+
+Evaluation time: 463.455594s
+Average evaluation time: 463.455594s
+Total time: 519.720524s
+
+k = 8, s = 1.25, Training time: 395.997090482 seconds
+Loading time: 60.016510s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55578	267
+1	238	30504
+
+Total: 86587
+Accuracy: 0.994168
+Total bits: 352953365.884125
+Average bits: 4076.285889
+
+Evaluation time: 475.768616s
+Average evaluation time: 475.768616s
+Total time: 535.788241s
+
+k = 8, s = 1.5, Training time: 368.978167993 seconds
+Loading time: 53.718984s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55592	253
+1	246	30496
+
+Total: 86587
+Accuracy: 0.994237
+Total bits: 361021894.178925
+Average bits: 4169.469727
+
+Evaluation time: 455.608887s
+Average evaluation time: 455.608887s
+Total time: 509.330547s
+
+k = 9, s = 0.5, Training time: 456.085641441 seconds
+
+
+k = 9, s = 0.75, Training time: 423.938461229 seconds
+Loading time: 98.344127s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	55407	438
+1	140	30602
+
+Total: 86587
+Accuracy: 0.993325
+Total bits: 367837020.627136
+Average bits: 4248.178223
+
+Evaluation time: 1550.300513s
+Average evaluation time: 1550.300513s
+Total time: 1648.648481s
+
+k = 9, s = 1, Training time: 382.805072160 seconds
+Loading time: 80.135710s
+
+Confusion Matrix (Actual\Predicted):
+	0	1
+0	49573	6272
+1	56	30686
+
+Total: 86587
+Accuracy: 0.926917
+Total bits: 420658636.536865
+Average bits: 4858.219238
+
+Evaluation time: 1182.244158s
+Average evaluation time: 1182.244158s
+Total time: 1262.383478s
+
+k = 9, s = 1.25, Training time: 2646.473354205 seconds
+
+
+k = 9, s = 1.5, Training time: 422.569042217 seconds
+
+
